@@ -10,6 +10,7 @@ public class BurguerbossApplication implements CommandLineRunner {
 
 	public static void main(String[] args){
 		SpringApplication.run(BurguerbossApplication.class, args);
+
 	}
 
 	@Override
