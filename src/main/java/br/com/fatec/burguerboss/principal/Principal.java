@@ -2,11 +2,16 @@ package br.com.fatec.burguerboss.principal;
 
 import br.com.fatec.burguerboss.models.Table;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Principal {
-    Scanner read = new Scanner(System.in);
+    List<Table> tables = new ArrayList<>();
+
+
     public void showMenu() {
+        Scanner read = new Scanner(System.in);
         var option = -1;
 
         while(option != 99){
@@ -39,15 +44,17 @@ public class Principal {
     }
 
     public void showTableMenu() {
+        Scanner read = new Scanner(System.in);
         var option = -1;
 
         while(option != 99){
             var menu = """
                         *|Gerenciar mesas|*
                         
-                        1 - Adicionar mesa
-                        2 - Excluir mesa
+                        1 - Alterar quantidade de mesas
                         3 - Alterar status da mesa
+                        4 - Consultar status da mesa
+                        5 - Visualizar todas as mesas
                                        
                         
                         99 - Sair
@@ -60,7 +67,17 @@ public class Principal {
 
             switch (option){
                 case 1:
-                    Table.addTable();
+                    Table.changeNumberOfTables(tables);
+                    break;
+                case 2:
+                    Table.selectTable();
+                    break;
+                case 3:
+                    Table.selectTable();
+                    break;
+                case 4:
+                    break;
+                case 5:
                     break;
                 case 99:
                     System.out.println("Saindo...");
