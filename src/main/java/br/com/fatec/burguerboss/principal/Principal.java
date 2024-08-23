@@ -1,5 +1,7 @@
 package br.com.fatec.burguerboss.principal;
 
+import br.com.fatec.burguerboss.models.Table;
+
 import java.util.Scanner;
 
 public class Principal {
@@ -22,6 +24,17 @@ public class Principal {
             System.out.print("Opcao escolhida: ");
             option = read.nextInt();
 
+            switch (option){
+                case 1:
+                    showTableMenu();
+                    break;
+                case 99:
+                    System.out.println("Saindo...");
+                    break;
+                default:
+                    System.out.println("Opcao invalida!");
+            }
+
         }
     }
 
@@ -30,7 +43,7 @@ public class Principal {
 
         while(option != 99){
             var menu = """
-                        *|Burguer Boss|*
+                        *|Gerenciar mesas|*
                         
                         1 - Adicionar mesa
                         2 - Excluir mesa
@@ -45,6 +58,16 @@ public class Principal {
             System.out.print("Opcao escolhida: ");
             option = read.nextInt();
 
+            switch (option){
+                case 1:
+                    Table.addTable();
+                    break;
+                case 99:
+                    System.out.println("Saindo...");
+                    break;
+                default:
+                    System.out.println("Opcao invalida!");
+            }
         }
     }
 }
