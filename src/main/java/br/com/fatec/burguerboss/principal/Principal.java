@@ -1,14 +1,19 @@
 package br.com.fatec.burguerboss.principal;
 
 import br.com.fatec.burguerboss.models.Table;
+import br.com.fatec.burguerboss.repository.TableRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Principal {
-    List<Table> tables = new ArrayList<>();
 
+    private final TableRepository repositorio;
+
+    public Principal(TableRepository repositorio) {
+        this.repositorio = repositorio;
+    }
 
     public void showMenu() {
         Scanner read = new Scanner(System.in);
@@ -67,17 +72,10 @@ public class Principal {
 
             switch (option){
                 case 1:
-                    Table.changeNumberOfTables(tables);
+                    changeNumberOfTables();
                     break;
                 case 2:
                     Table.selectTable();
-                    break;
-                case 3:
-                    Table.selectTable();
-                    break;
-                case 4:
-                    break;
-                case 5:
                     break;
                 case 99:
                     System.out.println("Saindo...");
@@ -86,5 +84,25 @@ public class Principal {
                     System.out.println("Opcao invalida!");
             }
         }
+    }
+
+    public void changeNumberOfTables() {
+        List<Table> tables = new ArrayList<>();
+        Scanner read = new Scanner(System.in);
+        System.out.println("Escreva o numero de mesas que irao compor o restaurante: ");
+        int input = read.nextInt();
+        if (tables.size()<input){
+            while (tables.size()!=input){
+                createTable(tables);
+            }
+        }
+        for (Table table : tables) {
+            System.out.println(table.toString());
+        }
+    }
+    public void createTable(List<Table> tables){
+        Table mesa = new Table(false);
+        tables.add(mesa);
+        repositorio.save(mesa);
     }
 }

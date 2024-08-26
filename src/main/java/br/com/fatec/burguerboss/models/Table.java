@@ -1,38 +1,41 @@
 package br.com.fatec.burguerboss.models;
 
+import br.com.fatec.burguerboss.principal.Principal;
+import br.com.fatec.burguerboss.repository.TableRepository;
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Table {
-    private double Id;
+@Entity
+public class Table{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int Id;
+    @Column
     private boolean Filled;
 
-    public Table(double id, boolean filled) {
-        Id = id;
+    public Table(boolean filled) {
         Filled = filled;
+    }
+
+    public Table() {
+
     }
 
     public static void addTable() {
 
     }
 
-    public static void changeNumberOfTables(List<Table> tables) {
-        Scanner read = new Scanner(System.in);
-        System.out.println("Escreva o numero de mesas que irao compor o restaurante: ");
-        int input = read.nextInt();
-        if (tables.size()<input){
-
-        }
 
 
-    }
-
-    public static double selectTable() {
+    public static void selectTable() {
         Scanner read = new Scanner(System.in);
 
         System.out.println("Selecione a mesa: ");
 
-        return read.nextDouble();
+        read.nextDouble();
     }
 
     public void changeStatus(){
@@ -43,7 +46,7 @@ public class Table {
         return Id;
     }
 
-    public void setId(double id) {
+    public void setId(int id) {
         Id = id;
     }
 
@@ -53,5 +56,13 @@ public class Table {
 
     public void setFilled(boolean filled) {
         Filled = filled;
+    }
+
+    @Override
+    public String toString() {
+        return "Table{" +
+                "Id=" + Id +
+                ", Filled=" + Filled +
+                '}';
     }
 }
