@@ -8,6 +8,11 @@ public class Table{
 
     public Table() {} //construtor vazio
 
+    public Table(int id, boolean filled) {
+        Id = id;
+        Filled = filled;
+    }
+
     public void changeStatus(){this.Filled = !this.Filled;} //inverte o "filled" da mesa
 
     @Override

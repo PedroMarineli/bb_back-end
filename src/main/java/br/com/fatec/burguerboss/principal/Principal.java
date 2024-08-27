@@ -66,7 +66,10 @@ public class Principal {
                 case 1:
                     changeNumberOfTables();
                     break;
-                case 2:
+                case 2, 3, 4:
+                    break;
+                case 5:
+                    showTablesList(tables);
                     break;
                 case 99:
                     System.out.println("Saindo...");
@@ -81,7 +84,7 @@ public class Principal {
         System.out.println("Escreva o numero de mesas que irao compor o restaurante: ");
         int input = read.nextInt();
         verifyNumberOfTables(input);
-        showTablesList(tables);
+        System.out.println("Quantidade alterada!");
     } //altera o numero de mesas na lista
 
     private void verifyNumberOfTables(int numberOfTables) {
@@ -106,13 +109,15 @@ public class Principal {
     } // Remove apenas um objeto onde o atributo e falso
 
     private void showTablesList(List<Table> tables) {
+        System.out.println("tamanho da lista: " + tables.size());
+        System.out.println("lista:");
         for (Table table : tables) {
             System.out.println(table.toString());
         }
     } //visualiza a lista de mesas
 
     public void createTable(List<Table> tables){
-        Table mesa = new Table(false);
+        Table mesa = new Table((int)(Math.random()*100), false);
         tables.add(mesa);
     } //instancia uma nova mesa e adiciona ela na lista
 }
