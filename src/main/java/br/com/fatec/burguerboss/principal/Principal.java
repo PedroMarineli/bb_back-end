@@ -66,7 +66,9 @@ public class Principal {
                 case 1:
                     changeNumberOfTables();
                     break;
-                case 2, 3, 4:
+                case 2:
+                    break;
+                case 3, 4:
                     break;
                 case 5:
                     showTablesList(tables);
@@ -79,6 +81,13 @@ public class Principal {
             }
         }
     } //cria e mostra um menu (cmd) para funções relacionadas ao gerenciamento de mesas
+
+    private int selectTable() {
+        System.out.print("Escolha uma mesa (id): ");
+        var input = read.nextInt();
+
+        return input;
+    } // retorna o id da mesa selecionada
 
     public void changeNumberOfTables() {
         System.out.println("Escreva o numero de mesas que irao compor o restaurante: ");
