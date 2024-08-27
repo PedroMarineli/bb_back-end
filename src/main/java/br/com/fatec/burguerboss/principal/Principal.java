@@ -50,9 +50,8 @@ public class Principal {
                         *|Gerenciar mesas|*
                         
                         1 - Alterar quantidade de mesas
-                        3 - Alterar status da mesa
-                        4 - Consultar status da mesa
-                        5 - Visualizar todas as mesas             
+                        2 - Alterar status da mesa
+                        3 - Visualizar todas as mesas            \s
                         
                         99 - Sair
                     """;
@@ -69,9 +68,7 @@ public class Principal {
                 case 2:
                     changeTableStatus();
                     break;
-                case 3, 4:
-                    break;
-                case 5:
+                case 3:
                     showTablesList(tables);
                     break;
                 case 99:
@@ -86,13 +83,12 @@ public class Principal {
     private void changeTableStatus() {
         searchTableById(selectTable()).changeStatus();
         System.out.println("Status alterado!");
-    }
+    } //altera o status da mesa
 
     private int selectTable() {
         System.out.print("Escolha uma mesa (id): ");
-        var input = read.nextInt();
 
-        return input;
+        return read.nextInt();
     } // retorna o id da mesa selecionada
 
     public void changeNumberOfTables() {
@@ -141,5 +137,5 @@ public class Principal {
                         .filter(table -> table.getId()==id)
                         .findFirst()
                         .orElse(null);
-    }
+    } //retorna uma mesa pelo Id
 }
