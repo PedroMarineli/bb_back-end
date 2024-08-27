@@ -1,14 +1,21 @@
 package br.com.fatec.burguerboss.models;
 
-public class Table{
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "tables")
+public class Desk {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int Id;
+    @Column(unique = false)
     private boolean Filled;
 
-    public Table(boolean filled) {Filled = filled;} //construtor iniciado com "filled"
+    public Desk(boolean filled) {Filled = filled;} //construtor iniciado com "filled"
 
-    public Table() {} //construtor vazio
+    public Desk() {} //construtor vazio
 
-    public Table(int id, boolean filled) {
+    public Desk(int id, boolean filled) {
         Id = id;
         Filled = filled;
     }
@@ -17,11 +24,11 @@ public class Table{
 
     @Override
     public String toString() {
-        return "Table{" +
+        return "Desk{" +
                 "Id=" + Id +
                 ", Filled=" + Filled +
                 '}';
-    } //toString da classe "table"
+    } //toString da classe "desk"
 
     public int getId() {return Id;} //getId
 

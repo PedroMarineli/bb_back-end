@@ -1,6 +1,7 @@
 package br.com.fatec.burguerboss.principal;
 
-import br.com.fatec.burguerboss.models.Table;
+import br.com.fatec.burguerboss.models.Desk;
+import br.com.fatec.burguerboss.repository.DeskRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,8 +9,13 @@ import java.util.Scanner;
 
 public class Principal {
 
-    List<Table> tables = new ArrayList<>(); //instancia uma lista de mesas
+    private final DeskRepository repository;
+    List<Desk> desks = new ArrayList<>(); //instancia uma lista de mesas
     Scanner read = new Scanner(System.in); //instancia um Scanner
+
+    public Principal(DeskRepository repository) {
+        this.repository = repository;
+    }
 
     public void showMenu() {
         var option = -1;
@@ -69,7 +75,7 @@ public class Principal {
                     changeTableStatus();
                     break;
                 case 3:
-                    showTablesList(tables);
+                    showTablesList(desks);
                     break;
                 case 99:
                     System.out.println("Saindo...");
@@ -99,42 +105,43 @@ public class Principal {
     } //altera o numero de mesas na lista
 
     private void verifyNumberOfTables(int numberOfTables) {
-        if (tables.size() < numberOfTables){
-            while (tables.size()!= numberOfTables){
-                createTable(tables);
+        if (desks.size() < numberOfTables){
+            while (desks.size()!= numberOfTables){
+                createTable(desks);
             }
-        } else if (tables.size() > numberOfTables) {
-            while (tables.size()!= numberOfTables){
-                deleteTable(tables);
+        } else if (desks.size() > numberOfTables) {
+            while (desks.size()!= numberOfTables){
+                deleteTable(desks);
             }
         }
     } //verifica o numero de mesas existentes na lista
 
-    private void deleteTable(List<Table> tables) {
-        for (int i = 0; i < tables.size(); i++) {
-            if (!tables.get(i).isFilled()){
-                tables.remove(i);
+    private void deleteTable(List<Desk> desks) {
+        for (int i = 0; i < desks.size(); i++) {
+            if (!desks.get(i).isFilled()){
+                desks.remove(i);
                 break;
             }
         }
     } // Remove apenas um objeto onde o atributo e falso
 
-    private void showTablesList(List<Table> tables) {
-        System.out.println("tamanho da lista: " + tables.size());
+    private void showTablesList(List<Desk> desks) {
+        System.out.println("tamanho da lista: " + desks.size());
         System.out.println("lista:");
-        for (Table table : tables) {
-            System.out.println(table.toString());
+        for (Desk desk : desks) {
+            System.out.println(desk.toString());
         }
     } //visualiza a lista de mesas
 
-    public void createTable(List<Table> tables){
-        Table mesa = new Table((int)(Math.random()*100), false);
-        tables.add(mesa);
+    public void createTable(List<Desk> desks){
+        Desk mesa = new Desk(false);
+        desks.add(mesa);
+        repository.save(mesa);
     } //instancia uma nova mesa e adiciona ela na lista
 
-    public Table searchTableById(int id){
-        return tables.stream()
-                        .filter(table -> table.getId()==id)
+    public Desk searchTableById(int id){
+        return desks.stream()
+                        .filter(desk -> desk.getId()==id)
                         .findFirst()
                         .orElse(null);
     } //retorna uma mesa pelo Id
