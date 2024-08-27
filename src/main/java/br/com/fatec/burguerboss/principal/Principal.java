@@ -91,10 +91,19 @@ public class Principal {
             }
         } else if (tables.size() > numberOfTables) {
             while (tables.size()!= numberOfTables){
-                tables.removeIf(table -> !table.isFilled()); //bug
+                deleteTable(tables);
             }
         }
     } //verifica o numero de mesas existentes na lista
+
+    private void deleteTable(List<Table> tables) {
+        for (int i = 0; i < tables.size(); i++) {
+            if (!tables.get(i).isFilled()){
+                tables.remove(i);
+                break;
+            }
+        }
+    } // Remove apenas um objeto onde o atributo e falso
 
     private void showTablesList(List<Table> tables) {
         for (Table table : tables) {
