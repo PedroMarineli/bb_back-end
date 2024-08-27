@@ -80,13 +80,21 @@ public class Principal {
     public void changeNumberOfTables() {
         System.out.println("Escreva o numero de mesas que irao compor o restaurante: ");
         int input = read.nextInt();
-        if (tables.size()<input){
-            while (tables.size()!=input){
-                createTable(tables);
-            }
-        }
+        verifyNumberOfTables(input);
         showTablesList(tables);
     } //altera o numero de mesas na lista
+
+    private void verifyNumberOfTables(int numberOfTables) {
+        if (tables.size() < numberOfTables){
+            while (tables.size()!= numberOfTables){
+                createTable(tables);
+            }
+        } else if (tables.size() > numberOfTables) {
+            while (tables.size()!= numberOfTables){
+                tables.removeIf(table -> !table.isFilled()); //bug
+            }
+        }
+    } //verifica o numero de mesas existentes na lista
 
     private void showTablesList(List<Table> tables) {
         for (Table table : tables) {
