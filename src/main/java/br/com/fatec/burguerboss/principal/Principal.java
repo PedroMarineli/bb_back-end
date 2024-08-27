@@ -67,6 +67,7 @@ public class Principal {
                     changeNumberOfTables();
                     break;
                 case 2:
+                    changeTableStatus();
                     break;
                 case 3, 4:
                     break;
@@ -81,6 +82,11 @@ public class Principal {
             }
         }
     } //cria e mostra um menu (cmd) para funções relacionadas ao gerenciamento de mesas
+
+    private void changeTableStatus() {
+        searchTableById(selectTable()).changeStatus();
+        System.out.println("Status alterado!");
+    }
 
     private int selectTable() {
         System.out.print("Escolha uma mesa (id): ");
@@ -129,4 +135,11 @@ public class Principal {
         Table mesa = new Table((int)(Math.random()*100), false);
         tables.add(mesa);
     } //instancia uma nova mesa e adiciona ela na lista
+
+    public Table searchTableById(int id){
+        return tables.stream()
+                        .filter(table -> table.getId()==id)
+                        .findFirst()
+                        .orElse(null);
+    }
 }
