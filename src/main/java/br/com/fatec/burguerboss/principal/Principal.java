@@ -1,7 +1,6 @@
 package br.com.fatec.burguerboss.principal;
 
 import br.com.fatec.burguerboss.models.Table;
-import br.com.fatec.burguerboss.repository.TableRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,14 +8,10 @@ import java.util.Scanner;
 
 public class Principal {
 
-    private final TableRepository repositorio;
-
-    public Principal(TableRepository repositorio) {
-        this.repositorio = repositorio;
-    }
+    List<Table> tables = new ArrayList<>(); //instancia uma lista de mesas
+    Scanner read = new Scanner(System.in); //instancia um Scanner
 
     public void showMenu() {
-        Scanner read = new Scanner(System.in);
         var option = -1;
 
         while(option != 99){
@@ -24,8 +19,7 @@ public class Principal {
                         *|Burguer Boss|*
                         
                         1 - Gerenciar mesas
-                                       
-                        
+                                      
                         99 - Sair
                     """;
 
@@ -46,10 +40,9 @@ public class Principal {
             }
 
         }
-    }
+    } //cria e mostra um menu (cmd) para selecionar as principais funções do código
 
     public void showTableMenu() {
-        Scanner read = new Scanner(System.in);
         var option = -1;
 
         while(option != 99){
@@ -59,8 +52,7 @@ public class Principal {
                         1 - Alterar quantidade de mesas
                         3 - Alterar status da mesa
                         4 - Consultar status da mesa
-                        5 - Visualizar todas as mesas
-                                       
+                        5 - Visualizar todas as mesas             
                         
                         99 - Sair
                     """;
@@ -75,7 +67,6 @@ public class Principal {
                     changeNumberOfTables();
                     break;
                 case 2:
-                    Table.selectTable();
                     break;
                 case 99:
                     System.out.println("Saindo...");
@@ -84,11 +75,9 @@ public class Principal {
                     System.out.println("Opcao invalida!");
             }
         }
-    }
+    } //cria e mostra um menu (cmd) para funções relacionadas ao gerenciamento de mesas
 
     public void changeNumberOfTables() {
-        List<Table> tables = new ArrayList<>();
-        Scanner read = new Scanner(System.in);
         System.out.println("Escreva o numero de mesas que irao compor o restaurante: ");
         int input = read.nextInt();
         if (tables.size()<input){
@@ -96,13 +85,17 @@ public class Principal {
                 createTable(tables);
             }
         }
+        showTablesList(tables);
+    } //altera o numero de mesas na lista
+
+    private void showTablesList(List<Table> tables) {
         for (Table table : tables) {
             System.out.println(table.toString());
         }
-    }
+    } //visualiza a lista de mesas
+
     public void createTable(List<Table> tables){
         Table mesa = new Table(false);
         tables.add(mesa);
-        repositorio.save(mesa);
-    }
+    } //instancia uma nova mesa e adiciona ela na lista
 }
