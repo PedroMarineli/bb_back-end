@@ -7,34 +7,37 @@ import jakarta.persistence.*;
 public class Desk {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int Id;
-    @Column
-    private boolean Filled;
+    private int id;
+    @Column(name = "filled")
+    private boolean filled;
 
-    public Desk(boolean filled) {Filled = filled;} //construtor iniciado com "filled"
+    public Desk(boolean filled) {
+        this.filled = filled;} //construtor iniciado com "filled"
 
     public Desk() {} //construtor vazio
 
     public Desk(int id, boolean filled) {
-        Id = id;
-        Filled = filled;
-    } // construtor completo
+        this.id = id;
+        this.filled = filled;
+    } //construtor completo
 
-    public void changeStatus(){this.Filled = !this.Filled;} //inverte o "filled" da mesa
+    public void changeStatus(){this.filled = !this.filled;} //inverte o "filled" da mesa
 
     @Override
     public String toString() {
         return "Desk{" +
-                "Id=" + Id +
-                ", Filled=" + Filled +
+                "Id=" + id +
+                ", Filled=" + filled +
                 '}';
     } //toString da classe "desk"
 
-    public int getId() {return Id;} //getId
+    public int getId() {return id;} //getId
 
-    public void setId(int id) {Id = id;} //setId
+    public void setId(int id) {
+        this.id = id;} //setId
 
-    public boolean isFilled() {return Filled;} //getFilled
+    public boolean isFilled() {return filled;} //getFilled
 
-    public void setFilled(boolean filled) {Filled = filled;} //setFilled
+    public void setFilled(boolean filled) {
+        this.filled = filled;} //setFilled
 }

@@ -98,7 +98,7 @@ public class Principal {
         System.out.print("Escolha uma mesa (id): ");
 
         return read.nextInt();
-    } // retorna o id da mesa selecionada
+    } //retorna o id da mesa selecionada
 
     public void changeNumberOfTables() {
         System.out.println("Escreva o numero de mesas que irao compor o restaurante: ");
@@ -114,19 +114,15 @@ public class Principal {
             }
         } else if (repository.count() > numberOfTables) {
             while (repository.count()!= numberOfTables){
-                deleteTable(desks);
+                deleteTable();
             }
         }
     } //verifica o numero de mesas existentes no banco de dados
 
-    private void deleteTable(List<Desk> desks) {
-        for (int i = 0; i < repository.count(); i++) {
-            if (!desks.get(i).isFilled()){
-                desks.remove(i);
-                break;
-            }
-        }
-    } // Remove apenas um objeto onde o atributo e falso
+    private void deleteTable() {
+        Desk deletedDesk = repository.findFirstByFilledIsFalse();
+        repository.delete(deletedDesk);
+    } //Remove apenas um objeto onde o atributo e falso
 
     private void showTablesList() {
         desks = repository.findAll();
