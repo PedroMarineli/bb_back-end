@@ -105,19 +105,19 @@ public class Principal {
     } //altera o numero de mesas na lista
 
     private void verifyNumberOfTables(int numberOfTables) {
-        if (desks.size() < numberOfTables){
-            while (desks.size()!= numberOfTables){
+        if (repository.count() < numberOfTables){
+            while (repository.count()!= numberOfTables){
                 createTable(desks);
             }
-        } else if (desks.size() > numberOfTables) {
-            while (desks.size()!= numberOfTables){
+        } else if (repository.count() > numberOfTables) {
+            while (repository.count()!= numberOfTables){
                 deleteTable(desks);
             }
         }
-    } //verifica o numero de mesas existentes na lista
+    } //verifica o numero de mesas existentes no banco de dados
 
     private void deleteTable(List<Desk> desks) {
-        for (int i = 0; i < desks.size(); i++) {
+        for (int i = 0; i < repository.count(); i++) {
             if (!desks.get(i).isFilled()){
                 desks.remove(i);
                 break;
@@ -126,7 +126,7 @@ public class Principal {
     } // Remove apenas um objeto onde o atributo e falso
 
     private void showTablesList(List<Desk> desks) {
-        System.out.println("tamanho da lista: " + desks.size());
+        System.out.println("tamanho da lista: " + repository.count());
         System.out.println("lista:");
         for (Desk desk : desks) {
             System.out.println(desk.toString());
@@ -137,7 +137,7 @@ public class Principal {
         Desk mesa = new Desk(false);
         desks.add(mesa);
         repository.save(mesa);
-    } //instancia uma nova mesa e adiciona ela na lista
+    } //instancia uma nova mesa e adiciona ela na lista e no banco de dados
 
     public Desk searchTableById(int id){
         return desks.stream()

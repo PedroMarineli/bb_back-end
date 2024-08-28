@@ -8,7 +8,7 @@ public class Desk {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int Id;
-    @Column(unique = false)
+    @Column
     private boolean Filled;
 
     public Desk(boolean filled) {Filled = filled;} //construtor iniciado com "filled"
@@ -18,7 +18,7 @@ public class Desk {
     public Desk(int id, boolean filled) {
         Id = id;
         Filled = filled;
-    }
+    } // construtor completo
 
     public void changeStatus(){this.Filled = !this.Filled;} //inverte o "filled" da mesa
 
