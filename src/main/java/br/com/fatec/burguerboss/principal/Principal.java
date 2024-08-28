@@ -2,9 +2,11 @@ package br.com.fatec.burguerboss.principal;
 
 import br.com.fatec.burguerboss.models.Desk;
 import br.com.fatec.burguerboss.repository.DeskRepository;
+import jakarta.persistence.Table;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class Principal {
@@ -87,7 +89,9 @@ public class Principal {
     } //cria e mostra um menu (cmd) para funções relacionadas ao gerenciamento de mesas
 
     private void changeTableStatus() {
-        searchTableById(selectTable()).changeStatus();
+        Desk desk = searchTableById(selectTable());
+        desk.changeStatus();
+        repository.save(desk);
         System.out.println("Status alterado!");
     } //altera o status da mesa
 
@@ -140,9 +144,7 @@ public class Principal {
     } //instancia uma nova mesa e adiciona ela na lista e no banco de dados
 
     public Desk searchTableById(int id){
-        return desks.stream()
-                        .filter(desk -> desk.getId()==id)
-                        .findFirst()
-                        .orElse(null);
+        Optional<Desk> desk = repository.findById(id);
+        return desk.orElse(null);
     } //retorna uma mesa pelo Id
 }
