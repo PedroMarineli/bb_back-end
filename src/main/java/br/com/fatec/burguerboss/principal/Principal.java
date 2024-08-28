@@ -2,7 +2,6 @@ package br.com.fatec.burguerboss.principal;
 
 import br.com.fatec.burguerboss.models.Desk;
 import br.com.fatec.burguerboss.repository.DeskRepository;
-import jakarta.persistence.Table;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,7 +76,7 @@ public class Principal {
                     changeTableStatus();
                     break;
                 case 3:
-                    showTablesList(desks);
+                    showTablesList();
                     break;
                 case 99:
                     System.out.println("Saindo...");
@@ -93,7 +92,7 @@ public class Principal {
         desk.changeStatus();
         repository.save(desk);
         System.out.println("Status alterado!");
-    } //altera o status da mesa
+    } //altera o status da mesa no banco de dados
 
     private int selectTable() {
         System.out.print("Escolha uma mesa (id): ");
@@ -111,7 +110,7 @@ public class Principal {
     private void verifyNumberOfTables(int numberOfTables) {
         if (repository.count() < numberOfTables){
             while (repository.count()!= numberOfTables){
-                createTable(desks);
+                createTable();
             }
         } else if (repository.count() > numberOfTables) {
             while (repository.count()!= numberOfTables){
@@ -129,7 +128,8 @@ public class Principal {
         }
     } // Remove apenas um objeto onde o atributo e falso
 
-    private void showTablesList(List<Desk> desks) {
+    private void showTablesList() {
+        desks = repository.findAll();
         System.out.println("tamanho da lista: " + repository.count());
         System.out.println("lista:");
         for (Desk desk : desks) {
@@ -137,9 +137,8 @@ public class Principal {
         }
     } //visualiza a lista de mesas
 
-    public void createTable(List<Desk> desks){
+    public void createTable(){
         Desk mesa = new Desk(false);
-        desks.add(mesa);
         repository.save(mesa);
     } //instancia uma nova mesa e adiciona ela na lista e no banco de dados
 
