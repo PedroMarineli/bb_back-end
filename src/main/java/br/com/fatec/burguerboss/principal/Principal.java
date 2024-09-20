@@ -24,9 +24,9 @@ public class Principal {
         while(option != 99){
             var menu = """
                         *|Burguer Boss|*
-                        
+                    
                         1 - Gerenciar mesas
-                                      
+                    
                         99 - Sair
                     """;
 
@@ -55,11 +55,11 @@ public class Principal {
         while(option != 99){
             var menu = """
                         *|Gerenciar mesas|*
-                        
+                    
                         1 - Alterar quantidade de mesas
                         2 - Alterar status da mesa
                         3 - Visualizar todas as mesas            \s
-                        
+                    
                         99 - Sair
                     """;
 
