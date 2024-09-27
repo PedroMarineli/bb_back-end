@@ -1,4 +1,4 @@
-package br.com.fatec.burguerboss.models;
+package br.com.fatec.burguerboss.desk;
 
 import jakarta.persistence.*;
 

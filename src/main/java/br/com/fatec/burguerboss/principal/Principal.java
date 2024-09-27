@@ -1,7 +1,7 @@
 package br.com.fatec.burguerboss.principal;
 
-import br.com.fatec.burguerboss.models.Desk;
-import br.com.fatec.burguerboss.repository.DeskRepository;
+import br.com.fatec.burguerboss.desk.Desk;
+import br.com.fatec.burguerboss.desk.DeskRepository;
 
 import java.util.ArrayList;
 import java.util.List;
