@@ -1,7 +1,7 @@
 package br.com.fatec.burguerboss;
 
 import br.com.fatec.burguerboss.principal.Principal;
-import br.com.fatec.burguerboss.repository.DeskRepository;
+import br.com.fatec.burguerboss.desk.DeskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
