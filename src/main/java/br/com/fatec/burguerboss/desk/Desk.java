@@ -19,7 +19,7 @@ public class Desk {
     public Desk(int id, boolean filled) {
         this.id = id;
         this.filled = filled;
-    } //construtor completo
+    } //construtor completoo
 
     public void changeStatus(){this.filled = !this.filled;} //inverte o "filled" da mesa
 
