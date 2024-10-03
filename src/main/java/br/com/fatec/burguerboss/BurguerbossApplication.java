@@ -1,14 +1,12 @@
 package br.com.fatec.burguerboss;
 
-import br.com.fatec.burguerboss.principal.Principal;
 import br.com.fatec.burguerboss.desk.DeskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BurguerbossApplication implements CommandLineRunner {
+public class BurguerbossApplication{
 	@Autowired
 	private DeskRepository repository;
 
@@ -16,9 +14,4 @@ public class BurguerbossApplication implements CommandLineRunner {
 		SpringApplication.run(BurguerbossApplication.class, args);
 	}
 
-	@Override
-	public void run(String... args) throws Exception {
-		Principal principal = new Principal(repository);
-		principal.showMenu();
-	}
 }

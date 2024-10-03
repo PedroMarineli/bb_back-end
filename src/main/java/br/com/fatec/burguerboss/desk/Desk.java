@@ -21,6 +21,11 @@ public class Desk {
         this.filled = filled;
     } //construtor completo
 
+    public Desk(DataListDesk data){
+        this.id = data.id();
+        this.filled = data.filled();
+    }
+
     public void changeStatus(){this.filled = !this.filled;} //inverte o "filled" da mesa
 
     @Override
