@@ -1,5 +1,6 @@
 package br.com.fatec.burguerboss.desk;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,13 +25,13 @@ public class DeskController {
 
     @PostMapping
     @Transactional
-    public void registerDesk(@RequestBody DataCreateDesk data){
+    public void registerDesk(@RequestBody @Valid DataCreateDesk data){
         verifyNumberOfTables(data.deskNumber());
     }
 
     @PutMapping
     @Transactional
-    public void updateDesk(@RequestBody DataUpdateDesk data){
+    public void updateDesk(@RequestBody @Valid DataUpdateDesk data){
         Desk desk = searchTableById(data.id());
         desk.changeStatus();
         repository.save(desk);
