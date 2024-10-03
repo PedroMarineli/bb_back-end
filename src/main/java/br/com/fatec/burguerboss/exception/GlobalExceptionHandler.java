@@ -8,6 +8,6 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public void solveException(Exception ex){
-        System.out.println("teste");
+        System.out.println(ex.getMessage());
     }
 }
