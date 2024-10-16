@@ -37,7 +37,6 @@ public class DeskController {
         repository.save(desk);
     }
 
-
     private void verifyNumberOfTables(int numberOfTables) {
         if (repository.count() < numberOfTables){
             while (repository.count()!= numberOfTables){
