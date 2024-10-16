@@ -1,13 +1,22 @@
 package br.com.fatec.burguerboss.menu;
 
+import jakarta.persistence.*;
+
 import java.math.BigDecimal;
 
+@Entity
+@Table(name = "MenuItens")
 public class MenuItem {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private BigDecimal price;
     private String name;
     private String category;
     private boolean available;
+    @ManyToOne
+    @JoinColumn(name = "menu_id")
+    private Menu menu;
 
     public MenuItem() {
     }
@@ -50,5 +59,13 @@ public class MenuItem {
 
     public void setAvailable(boolean available) {
         this.available = available;
+    }
+
+    public Menu getMenu() {
+        return menu;
+    }
+
+    public void setMenu(Menu menu) {
+        this.menu = menu;
     }
 }

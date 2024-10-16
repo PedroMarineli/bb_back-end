@@ -1,11 +1,14 @@
 package br.com.fatec.burguerboss.menu;
 
+import jakarta.persistence.*;
+
 import java.util.List;
 
+@Entity
+@Table(name = "menu")
 public class Menu {
-    List<MenuItem> itens;
-
-    public List<MenuItem> getItens() {
-        return itens;
-    }
+    @Id
+    private int id;
+    @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MenuItem> itens;
 }

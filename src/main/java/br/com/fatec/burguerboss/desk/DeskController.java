@@ -13,7 +13,6 @@ import java.util.Scanner;
 @RestController
 @RequestMapping("/desk")
 public class DeskController {
-    Scanner read = new Scanner(System.in);
 
     @Autowired
     private DeskRepository repository;
