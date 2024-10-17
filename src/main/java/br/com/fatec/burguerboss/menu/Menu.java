@@ -11,4 +11,20 @@ public class Menu {
     private int id;
     @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MenuItem> itens;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public List<MenuItem> getItens() {
+        return itens;
+    }
+
+    public void setItens(List<MenuItem> itens) {
+        this.itens = itens;
+    }
 }

@@ -1,21 +1,37 @@
 package br.com.fatec.burguerboss.menu;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 
 @RestController
 @RequestMapping("/menu")
 public class MenuController {
     @Autowired
-    private MenuItemRepository repository;
+    private MenuService menuService;
 
     @GetMapping
-    public Page<DataListMenuItem> listMenu(Pageable pagination){
-        return repository.findAll(pagination).map(DataListMenuItem::new);
+    public List<DataListMenu> listMenu(){
+        return menuService.listMenuItem();
+    }
+
+    @PostMapping("/item")
+    @Transactional
+    public void registerMenuItem(@RequestBody DataCreateMenuItem data){
+        menuService.registerMenuItem(data);
+    }
+
+    @PostMapping
+    @Transactional
+    public void registerMenu(){
+        menuService.registerMenu();
+    }
+
+    @PutMapping
+    @Transactional
+    public void updateMenuItem(@RequestBody DataUpdateMenuItem data){
+        menuService.updateMenuItem(data);
     }
 }

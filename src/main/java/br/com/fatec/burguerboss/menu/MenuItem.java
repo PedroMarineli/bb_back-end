@@ -21,6 +21,14 @@ public class MenuItem {
     public MenuItem() {
     }
 
+    public MenuItem(DataCreateMenuItem data) {
+        this.price = data.price();
+        this.name = data.name();
+        this.category = data.category();
+        this.available = data.available();
+        this.menu = data.menu();
+    }
+
     public int getId() {
         return id;
     }
