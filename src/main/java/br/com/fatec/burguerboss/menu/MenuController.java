@@ -29,7 +29,7 @@ public class MenuController {
         menuService.registerMenu();
     }
 
-    @PutMapping
+    @PutMapping("/item")
     @Transactional
     public void updateMenuItem(@RequestBody DataUpdateMenuItem data){
         menuService.updateMenuItem(data);
