@@ -7,8 +7,7 @@ public record DataListMenuItem(
          BigDecimal price,
          String name,
          String category,
-         boolean available,
-         Menu menu
+         boolean available
 ) {
     public DataListMenuItem(MenuItem menuItem){
         this(
@@ -16,8 +15,7 @@ public record DataListMenuItem(
                 menuItem.getPrice(),
                 menuItem.getName(),
                 menuItem.getCategory(),
-                menuItem.isAvailable(),
-                menuItem.getMenu()
+                menuItem.isAvailable()
         );
     }
 }

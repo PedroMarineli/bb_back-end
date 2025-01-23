@@ -16,14 +16,15 @@ public class MenuService {
     @Autowired
     private MenuRepository repositoryMenu;
 
-    public List<DataListMenu> listMenuItem() {
-        return repositoryMenu.findAll().stream().map(menu -> {
+    public List<DataListMenu> listMenuItem(int id) {
+        return repositoryMenu.findById(id).stream().map(menu -> {
             List<DataListMenuItem> itens = menu.getItens().stream()
                     .map(DataListMenuItem::new)
                     .collect(Collectors.toList());
             return new DataListMenu(itens);
         }).collect(Collectors.toList());
     }
+
 
     public void registerMenuItem(@RequestBody DataCreateMenuItem data) {
         MenuItem item = new MenuItem(data);

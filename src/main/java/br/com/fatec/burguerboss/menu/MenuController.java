@@ -7,14 +7,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/menu")
+@RequestMapping("/menu/{id}")
 public class MenuController {
     @Autowired
     private MenuService menuService;
 
     @GetMapping
-    public List<DataListMenu> listMenu(){
-        return menuService.listMenuItem();
+    public List<DataListMenu> listMenu(@PathVariable int id){
+        return menuService.listMenuItem(id);
     }
 
     @PostMapping("/item")
