@@ -13,8 +13,13 @@ public class MenuService {
     @Autowired
     private MenuRepository repositoryMenu;
 
-    //this method search all the items in repositoryMenu and transform then in DataListMenuItems, after that it returns it
-    public List<DataListMenuItems> listMenuItems(int id) {
-        return repositoryMenu.findById(id).stream().map(DataListMenuItems::new).collect(Collectors.toList());
+    //search a menu with the (id) in repositoryMenu and transform then in DataListMenuItems, after that it returns it
+    public DataListMenuItems listMenuItems(int id) {
+        return repositoryMenu.findById(id).map(DataListMenuItems::new).orElseThrow();
+    }
+
+    //search all the menus in repositoryMenu and transform then in DataListMenu, after that it returns it
+    public List<DataListMenu> listMenu() {
+        return repositoryMenu.findAll().stream().map(DataListMenu::new).collect(Collectors.toList());
     }
 }
