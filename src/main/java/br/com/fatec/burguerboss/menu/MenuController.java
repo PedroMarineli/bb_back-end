@@ -12,7 +12,7 @@ public class MenuController {
     @Autowired
     private MenuService menuService;
 
-    @GetMapping
+    @GetMapping("/itens")
     public List<DataListMenu> listMenu(@PathVariable int id){
         return menuService.listMenuItem(id);
     }

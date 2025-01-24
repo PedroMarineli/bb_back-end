@@ -8,15 +8,15 @@ import java.util.List;
 @Table(name = "menu")
 public class Menu {
     @Id
-    private int id;
+    private Integer id;
     @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MenuItem> itens;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
