@@ -12,19 +12,12 @@ public class Menu {
     @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MenuItem> itens;
 
-    public Integer getId() {
-        return id;
-    }
+    //Getters and Setters
+    public Integer getId() {return id;}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    public void setId(Integer id) {this.id = id;}
 
-    public List<MenuItem> getItens() {
-        return itens;
-    }
+    public List<MenuItem> getItens() {return itens;}
 
-    public void setItens(List<MenuItem> itens) {
-        this.itens = itens;
-    }
+    public void setItens(List<MenuItem> itens) {this.itens = itens;}
 }
