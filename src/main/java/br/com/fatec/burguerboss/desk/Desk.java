@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 public class Desk {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     @Column(name = "filled")
     private boolean filled;
 
@@ -16,7 +16,7 @@ public class Desk {
 
     public Desk() {} //construtor vazio
 
-    public Desk(int id, boolean filled) {
+    public Desk(Integer id, boolean filled) {
         this.id = id;
         this.filled = filled;
     } //construtor completo
@@ -36,9 +36,9 @@ public class Desk {
                 '}';
     } //toString da classe "desk"
 
-    public int getId() {return id;} //getId
+    public Integer getId() {return id;} //getId
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;} //setId
 
     public boolean isFilled() {return filled;} //getFilled
