@@ -50,8 +50,13 @@ public class MenuService {
         repositoryItem.save(item);
     }
 
-    //search a menu by id e delete it
+    //search a menu by id and delete it
     public void deleteMenu(Integer id) {
         repositoryMenu.deleteById(id);
+    }
+
+    //search a menu item by id and delete it
+    public void deleteMenuItem(Integer id) {
+        repositoryItem.deleteById(id);
     }
 }

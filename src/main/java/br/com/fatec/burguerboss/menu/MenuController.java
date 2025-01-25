@@ -53,4 +53,9 @@ public class MenuController {
         menuService.deleteMenu(id);
     }
 
+    //call a menuService method to delete a menu item
+    @DeleteMapping("/item/{id}")
+    public void deleteMenuItem(@PathVariable @NotNull Integer id){
+        menuService.deleteMenuItem(id);
+    }
 }
