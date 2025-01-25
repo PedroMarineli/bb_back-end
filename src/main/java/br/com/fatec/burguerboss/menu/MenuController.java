@@ -40,7 +40,8 @@ public class MenuController {
         menuService.createMenuItem(data);
     }
 
-    @PutMapping
+    //call a menuService method to update a menu item
+    @PutMapping("/item")
     @Transactional
     public void updateMenuItem(@RequestBody @Valid DataUpdateMenuItem data){
         menuService.updateMenuItem(data);

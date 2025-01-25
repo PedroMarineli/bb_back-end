@@ -37,8 +37,15 @@ public class MenuService {
         repositoryItem.save(item);
     }
 
+    //search a menu item with the (id) in repositoryItem and update the data with the received DTO(DataUpdateMenuItem)
     public void updateMenuItem(DataUpdateMenuItem data) {
-        Optional<MenuItem> item = repositoryItem.findById(data.id());
-
+        MenuItem item = repositoryItem.findById(data.id()).orElse(null);
+        assert item != null;
+        item.setAvailable(data.available());
+        item.setCategory(data.category());
+        item.setName(data.name());
+        item.setPrice(data.price());
+        item.setMenu(data.menu());
+        repositoryItem.save(item);
     }
 }
