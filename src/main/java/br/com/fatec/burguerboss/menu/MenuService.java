@@ -1,9 +1,11 @@
 package br.com.fatec.burguerboss.menu;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,5 +35,10 @@ public class MenuService {
     public void createMenuItem(DataCreateMenuItem data) {
         MenuItem item = new MenuItem(data);
         repositoryItem.save(item);
+    }
+
+    public void updateMenuItem(DataUpdateMenuItem data) {
+        Optional<MenuItem> item = repositoryItem.findById(data.id());
+
     }
 }

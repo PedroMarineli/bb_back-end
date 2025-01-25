@@ -39,4 +39,10 @@ public class MenuController {
     public void createMenuItem(@RequestBody @Valid DataCreateMenuItem data){
         menuService.createMenuItem(data);
     }
+
+    @PutMapping
+    @Transactional
+    public void updateMenuItem(@RequestBody @Valid DataUpdateMenuItem data){
+        menuService.updateMenuItem(data);
+    }
 }
