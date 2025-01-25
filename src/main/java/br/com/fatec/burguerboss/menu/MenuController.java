@@ -25,6 +25,7 @@ public class MenuController {
         return menuService.listMenuItems(id);
     }
 
+    //call a menuService method to create a new menu
     @PostMapping
     @Transactional
     public void createMenu(){

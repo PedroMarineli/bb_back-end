@@ -23,9 +23,9 @@ public class MenuService {
         return repositoryMenu.findAll().stream().map(DataListMenu::new).collect(Collectors.toList());
     }
 
+    //create a new entity Menu and save it on the repository(database)
     public void createMenu() {
         Menu menu = new Menu();
-        System.out.println(menu.getId());
         repositoryMenu.save(menu);
     }
 }
