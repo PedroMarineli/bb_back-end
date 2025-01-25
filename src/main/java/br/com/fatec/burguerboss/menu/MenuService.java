@@ -28,4 +28,10 @@ public class MenuService {
         Menu menu = new Menu();
         repositoryMenu.save(menu);
     }
+
+    //create a new MenuItem entity and save it on the repository(database)
+    public void createMenuItem(DataCreateMenuItem data) {
+        MenuItem item = new MenuItem(data);
+        repositoryItem.save(item);
+    }
 }
