@@ -1,5 +1,6 @@
 package br.com.fatec.burguerboss.menu;
 
+import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,5 +23,11 @@ public class MenuController {
     @GetMapping("/{id}")
     public DataListMenuItems listMenuItems(@PathVariable @NotNull Integer id){
         return menuService.listMenuItems(id);
+    }
+
+    @PostMapping
+    @Transactional
+    public void createMenu(){
+         menuService.createMenu();
     }
 }

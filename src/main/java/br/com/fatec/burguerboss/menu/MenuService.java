@@ -22,4 +22,10 @@ public class MenuService {
     public List<DataListMenu> listMenu() {
         return repositoryMenu.findAll().stream().map(DataListMenu::new).collect(Collectors.toList());
     }
+
+    public void createMenu() {
+        Menu menu = new Menu();
+        System.out.println(menu.getId());
+        repositoryMenu.save(menu);
+    }
 }

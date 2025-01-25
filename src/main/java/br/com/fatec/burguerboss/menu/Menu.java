@@ -8,6 +8,7 @@ import java.util.List;
 @Table(name = "menu")
 public class Menu {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MenuItem> itens;
