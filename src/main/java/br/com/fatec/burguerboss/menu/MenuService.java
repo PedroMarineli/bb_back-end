@@ -1,9 +1,9 @@
 package br.com.fatec.burguerboss.menu;
 
-import br.com.fatec.burguerboss.desk.Desk;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,41 +16,47 @@ public class MenuService {
     @Autowired
     private MenuRepository repositoryMenu;
 
-    public List<DataListMenu> listMenuItem(int id) {
-        return repositoryMenu.findById(id).stream().map(menu -> {
-            List<DataListMenuItem> itens = menu.getItens().stream()
-                    .map(DataListMenuItem::new)
-                    .collect(Collectors.toList());
-            return new DataListMenu(itens);
-        }).collect(Collectors.toList());
+    //search a menu with the (id) in repositoryMenu and transform then in DataListMenuItems, after that it returns it
+    public DataListMenuItems listMenuItems(int id) {
+        return repositoryMenu.findById(id).map(DataListMenuItems::new).orElseThrow();
     }
 
-
-    public void registerMenuItem(@RequestBody DataCreateMenuItem data) {
-        MenuItem item = new MenuItem(data);
-        repositoryItem.save(item);
+    //search all the menus in repositoryMenu and transform then in DataListMenu, after that it returns it
+    public List<DataListMenu> listMenu() {
+        return repositoryMenu.findAll().stream().map(DataListMenu::new).collect(Collectors.toList());
     }
 
-    public void registerMenu() {
+    //create a new entity Menu and save it on the repository(database)
+    public void createMenu() {
         Menu menu = new Menu();
         repositoryMenu.save(menu);
     }
 
-    public void updateMenuItem(@RequestBody DataUpdateMenuItem data) {
-        MenuItem item = searchMenuItemById(data.id());
-
-        item.setPrice(data.price());
-        item.setName(data.name());
-        item.setCategory(data.category());
-        item.setAvailable(data.available());
-        item.setMenu(data.menu());
-
+    //create a new MenuItem entity and save it on the repository(database)
+    public void createMenuItem(DataCreateMenuItem data) {
+        MenuItem item = new MenuItem(data);
         repositoryItem.save(item);
-
     }
 
-    public MenuItem searchMenuItemById(int id){
-        Optional<MenuItem> item = repositoryItem.findById(id);
-        return item.orElse(null);
+    //search a menu item with the (id) in repositoryItem and update the data with the received DTO(DataUpdateMenuItem)
+    public void updateMenuItem(DataUpdateMenuItem data) {
+        MenuItem item = repositoryItem.findById(data.id()).orElse(null);
+        assert item != null;
+        item.setAvailable(data.available());
+        item.setCategory(data.category());
+        item.setName(data.name());
+        item.setPrice(data.price());
+        item.setMenu(data.menu());
+        repositoryItem.save(item);
+    }
+
+    //search a menu by id and delete it
+    public void deleteMenu(Integer id) {
+        repositoryMenu.deleteById(id);
+    }
+
+    //search a menu item by id and delete it
+    public void deleteMenuItem(Integer id) {
+        repositoryItem.deleteById(id);
     }
 }

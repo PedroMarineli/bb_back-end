@@ -1,8 +1,14 @@
 package br.com.fatec.burguerboss.menu;
 
-import java.util.List;
-
 public record DataListMenu(
-        List<DataListMenuItem> itens
+        Integer id,
+        Integer MenuLength
 ) {
+    //a constructor that receives a menu and return a DataListMenu
+    public DataListMenu(Menu menu) {
+        this(
+                menu.getId(),
+                menu.getItens().size()
+        );
+    }
 }
