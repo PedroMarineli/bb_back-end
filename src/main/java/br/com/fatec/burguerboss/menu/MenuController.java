@@ -46,4 +46,11 @@ public class MenuController {
     public void updateMenuItem(@RequestBody @Valid DataUpdateMenuItem data){
         menuService.updateMenuItem(data);
     }
+
+    //call a menuService method to delete a menu
+    @DeleteMapping("/{id}")
+    public void deleteMenu(@PathVariable @NotNull Integer id){
+        menuService.deleteMenu(id);
+    }
+
 }

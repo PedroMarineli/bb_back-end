@@ -1,6 +1,7 @@
 package br.com.fatec.burguerboss.menu;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,5 +48,10 @@ public class MenuService {
         item.setPrice(data.price());
         item.setMenu(data.menu());
         repositoryItem.save(item);
+    }
+
+    //search a menu by id e delete it
+    public void deleteMenu(Integer id) {
+        repositoryMenu.deleteById(id);
     }
 }
