@@ -17,4 +17,8 @@ public class OrderService {
     public List<DataListOrder> listOrders() {
         return orderRepository.findAll().stream().map(DataListOrder::new).collect(Collectors.toList());
     }
+
+    public void createOrder() {
+        Order order = new Order();
+    }
 }
