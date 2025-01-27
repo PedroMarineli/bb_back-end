@@ -1,6 +1,6 @@
 package br.com.fatec.burguerboss.payment;
 
-public enum     PaymentMethod {
+public enum PaymentMethod {
     CASH,
     PIX,
     CREDIT_CARD,
