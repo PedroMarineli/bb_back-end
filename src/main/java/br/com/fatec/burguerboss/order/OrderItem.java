@@ -1,6 +1,7 @@
 package br.com.fatec.burguerboss.order;
 
 import br.com.fatec.burguerboss.menu.MenuItem;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -13,9 +14,18 @@ public class OrderItem {
     @OneToOne
     @JoinColumn(name = "menuItem_id")
     private MenuItem menuItem;
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
+
+    public OrderItem(DataCreateOrderItem data) {
+        this.quantity = data.quantity();
+        this.menuItem = data.menuItem();
+    }
+
+    public OrderItem() {
+    }
 
     //getters and setters
     public Integer getId() {

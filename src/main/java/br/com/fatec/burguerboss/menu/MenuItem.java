@@ -1,5 +1,6 @@
 package br.com.fatec.burguerboss.menu;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -14,6 +15,7 @@ public class MenuItem {
     private String name;
     private String category;
     private boolean available;
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "menu_id")
     private Menu menu;

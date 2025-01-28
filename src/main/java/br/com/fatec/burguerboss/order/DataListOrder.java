@@ -2,6 +2,7 @@ package br.com.fatec.burguerboss.order;
 
 import br.com.fatec.burguerboss.desk.Desk;
 import br.com.fatec.burguerboss.payment.PaymentMethod;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.math.BigDecimal;
 import java.util.List;

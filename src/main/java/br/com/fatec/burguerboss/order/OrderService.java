@@ -18,7 +18,13 @@ public class OrderService {
         return orderRepository.findAll().stream().map(DataListOrder::new).collect(Collectors.toList());
     }
 
-    public void createOrder() {
-        Order order = new Order();
+    public void createOrder(DataCreateOrder data) {
+        Order order = new Order(data);
+        orderRepository.save(order);
+    }
+
+    public void createOrderItem(DataCreateOrderItem data) {
+        OrderItem order = new OrderItem(data);
+        orderItemRepository.save(order);
     }
 }
