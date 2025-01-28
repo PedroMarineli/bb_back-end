@@ -22,6 +22,7 @@ public class OrderItem {
     public OrderItem(DataCreateOrderItem data) {
         this.quantity = data.quantity();
         this.menuItem = data.menuItem();
+        this.order = data.order();
     }
 
     public OrderItem() {
