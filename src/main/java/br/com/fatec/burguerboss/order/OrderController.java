@@ -41,4 +41,14 @@ public class OrderController {
     public void updateOrderItem(@RequestBody DataUpdateOrderItem data){
         orderService.updateOrderItem(data);
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteOrder(@PathVariable Integer id){
+        orderService.deleteOrder(id);
+    }
+
+    @DeleteMapping("/item/{id}")
+    public void deleteOrderItem(@PathVariable Integer id){
+        orderService.deleteOrderItem(id);
+    }
 }

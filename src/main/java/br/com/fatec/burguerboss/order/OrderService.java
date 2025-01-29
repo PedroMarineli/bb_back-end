@@ -45,4 +45,12 @@ public class OrderService {
         item.setOrder(data.order());
         item.setMenuItem(data.menuItem());
     }
+
+    public void deleteOrder(Integer id) {
+        orderRepository.deleteById(id);
+    }
+
+    public void deleteOrderItem(Integer id) {
+        orderItemRepository.deleteById(id);
+    }
 }
