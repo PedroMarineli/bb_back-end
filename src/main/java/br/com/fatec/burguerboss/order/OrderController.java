@@ -29,4 +29,16 @@ public class OrderController {
     public void createOrderItem(@RequestBody DataCreateOrderItem data){
         orderService.createOrderItem(data);
     }
+
+    @PutMapping
+    @Transactional
+    public void updateOrder(@RequestBody DataUpdateOrder data){
+        orderService.updateOrder(data);
+    }
+
+    @PutMapping("/item")
+    @Transactional
+    public void updateOrderItem(@RequestBody DataUpdateOrderItem data){
+        orderService.updateOrderItem(data);
+    }
 }

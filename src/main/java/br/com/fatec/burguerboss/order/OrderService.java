@@ -27,4 +27,22 @@ public class OrderService {
         OrderItem order = new OrderItem(data);
         orderItemRepository.save(order);
     }
+
+    public void updateOrder(DataUpdateOrder data) {
+        Order order = orderRepository.findById(data.id()).orElse(null);
+        assert order != null;
+        order.setTotalValue(data.totalValue());
+        order.setOrderStatus(data.orderStatus());
+        order.setDesk(data.desk());
+        order.setPaymentMethod(data.paymentMethod());
+        orderRepository.save(order);
+    }
+
+    public void updateOrderItem(DataUpdateOrderItem data) {
+        OrderItem item = orderItemRepository.findById(data.id()).orElse(null);
+        assert item != null;
+        item.setQuantity(data.quantity());
+        item.setOrder(data.order());
+        item.setMenuItem(data.menuItem());
+    }
 }
