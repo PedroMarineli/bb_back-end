@@ -24,6 +24,17 @@ public class Order {
     @JoinColumn(name = "desk_id")
     private Desk desk;
 
+    public Order(DataCreateOrder data) {
+        this.totalValue = data.totalValue();
+        this.paymentMethod = data.paymentMethod();
+        this.orderItems = data.orderItems();
+        this.orderStatus = data.orderStatus();
+        this.desk = data.desk();
+    }
+
+    public Order() {
+    }
+
     //getters and setters
     public Integer getId() {
         return id;
