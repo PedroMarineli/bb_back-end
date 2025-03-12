@@ -1,6 +1,6 @@
 package br.com.fatec.burguerboss;
 
-import br.com.fatec.burguerboss.desk.DeskRepository;
+import br.com.fatec.burguerboss.domain.desk.DeskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
