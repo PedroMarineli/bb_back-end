@@ -5,6 +5,8 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,22 +21,24 @@ public class DeskController {
     private DeskRepository repository;
 
     @GetMapping
-    public Page<DataListDesk> listDesk(Pageable pagination){
-        return repository.findAll(pagination).map(DataListDesk::new);
+    public ResponseEntity<Page<DataListDesk>> listDesk(Pageable pagination){
+        return ResponseEntity.ok().body(repository.findAll(pagination).map(DataListDesk::new));
     }
 
     @PostMapping
     @Transactional
-    public void registerDesk(@RequestBody @Valid DataCreateDesk data){
+    public ResponseEntity<Void> registerDesk(@RequestBody @Valid DataCreateDesk data){
         verifyNumberOfTables(data.deskNumber());
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping
     @Transactional
-    public void updateDesk(@RequestBody @Valid DataUpdateDesk data){
+    public ResponseEntity<Void> updateDesk(@RequestBody @Valid DataUpdateDesk data){
         Desk desk = searchTableById(data.id());
         desk.changeStatus();
         repository.save(desk);
+        return ResponseEntity.ok().build();
     }
 
     private void verifyNumberOfTables(int numberOfTables) {
