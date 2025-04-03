@@ -9,7 +9,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> erroGlobal(Exception e){
-        return ResponseEntity.badRequest().body(e.getLocalizedMessage());
+        return ResponseEntity.badRequest().body(e.getMessage());
     }
 
 }

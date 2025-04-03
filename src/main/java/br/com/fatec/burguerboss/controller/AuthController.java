@@ -3,7 +3,7 @@ package br.com.fatec.burguerboss.controller;
 import br.com.fatec.burguerboss.domain.user.User;
 import br.com.fatec.burguerboss.domain.user.UserData;
 import br.com.fatec.burguerboss.infra.security.DadosTokenJWT;
-import br.com.fatec.burguerboss.infra.security.configuration.TokenService;
+import br.com.fatec.burguerboss.infra.security.TokenService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

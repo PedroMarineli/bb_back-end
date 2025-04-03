@@ -1,4 +1,4 @@
-package br.com.fatec.burguerboss.infra.security.configuration;
+package br.com.fatec.burguerboss.infra.security;
 
 import br.com.fatec.burguerboss.domain.user.User;
 import com.auth0.jwt.JWT;
