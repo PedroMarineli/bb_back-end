@@ -1,6 +1,9 @@
 package br.com.fatec.burguerboss.controller;
 
+import br.com.fatec.burguerboss.domain.user.User;
 import br.com.fatec.burguerboss.domain.user.UserData;
+import br.com.fatec.burguerboss.infra.security.DadosTokenJWT;
+import br.com.fatec.burguerboss.infra.security.configuration.TokenService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,15 +21,16 @@ public class AuthController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Autowired
+    private TokenService tokenService;
+
     @PostMapping
     public ResponseEntity login(@RequestBody @Valid UserData userdata) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        userdata.username(),
-                        userdata.password()
-                )
-        );
+        var authenticationToken = new UsernamePasswordAuthenticationToken(userdata.username(), userdata.password());
+        var authentication = authenticationManager.authenticate(authenticationToken);
 
-        return ResponseEntity.ok().build();
+        var tokenJWT = tokenService.gerarToken((User) authentication.getPrincipal());
+
+        return ResponseEntity.ok(new DadosTokenJWT(tokenJWT));
     }
 }
