@@ -19,6 +19,11 @@ public class User implements UserDetails {
     public User() {
     }
 
+    public User(DataCreateUser data) {
+        this.username = data.username();
+        this.password = data.password();
+    }
+
 
     public String getUsername() {
         return username;
