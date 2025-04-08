@@ -4,6 +4,8 @@ import br.com.fatec.burguerboss.domain.order.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,41 +17,47 @@ public class OrderController {
     private OrderService orderService;
 
     @GetMapping
-    public List<DataListOrder> listOrders(){
-        return orderService.listOrders();
+    public ResponseEntity<List<DataListOrder>> listOrders(){
+        return ResponseEntity.ok().body(orderService.listOrders());
     }
 
     @PostMapping
     @Transactional
-    public void createOrder(@RequestBody DataCreateOrder data){
+    public ResponseEntity<Void> createOrder(@RequestBody DataCreateOrder data){
         orderService.createOrder(data);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping("/item")
     @Transactional
-    public void createOrderItem(@RequestBody DataCreateOrderItem data){
+    public ResponseEntity<Void> createOrderItem(@RequestBody DataCreateOrderItem data){
         orderService.createOrderItem(data);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping
     @Transactional
-    public void updateOrder(@RequestBody DataUpdateOrder data){
+    public ResponseEntity<Void> updateOrder(@RequestBody DataUpdateOrder data){
         orderService.updateOrder(data);
+        return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/item")
     @Transactional
-    public void updateOrderItem(@RequestBody DataUpdateOrderItem data){
+    public ResponseEntity<Void> updateOrderItem(@RequestBody DataUpdateOrderItem data){
         orderService.updateOrderItem(data);
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")
-    public void deleteOrder(@PathVariable Integer id){
+    public ResponseEntity<Void> deleteOrder(@PathVariable Integer id){
         orderService.deleteOrder(id);
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/item/{id}")
-    public void deleteOrderItem(@PathVariable Integer id){
+    public ResponseEntity<Void> deleteOrderItem(@PathVariable Integer id){
         orderService.deleteOrderItem(id);
+        return ResponseEntity.noContent().build();
     }
 }

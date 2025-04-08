@@ -5,6 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DeskRepository extends JpaRepository<Desk, Integer> {
-
     Desk findFirstByFilledIsFalse();
 }

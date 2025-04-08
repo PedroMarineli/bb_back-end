@@ -17,53 +17,24 @@ import java.util.Optional;
 public class DeskController {
 
     @Autowired
-    private DeskRepository repository;
+    private DeskService deskService;
 
     @GetMapping
     public ResponseEntity<Page<DataListDesk>> listDesk(Pageable pagination){
-        return ResponseEntity.ok().body(repository.findAll(pagination).map(DataListDesk::new));
+        return ResponseEntity.ok().body(deskService.listDesk(pagination));
     }
 
     @PostMapping
     @Transactional
     public ResponseEntity<Void> registerDesk(@RequestBody @Valid DataCreateDesk data){
-        verifyNumberOfTables(data.deskNumber());
+        deskService.verifyNumberOfTables(data.deskNumber());
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping
     @Transactional
     public ResponseEntity<Void> updateDesk(@RequestBody @Valid DataUpdateDesk data){
-        Desk desk = searchTableById(data.id());
-        desk.changeStatus();
-        repository.save(desk);
-        return ResponseEntity.ok().build();
+        deskService.updateDesk(data);
+        return ResponseEntity.noContent().build();
     }
-
-    private void verifyNumberOfTables(int numberOfTables) {
-        if (repository.count() < numberOfTables){
-            while (repository.count()!= numberOfTables){
-                createTable();
-            }
-        } else if (repository.count() > numberOfTables) {
-            while (repository.count()!= numberOfTables){
-                deleteTable();
-            }
-        }
-    } //verifica o numero de mesas existentes no banco de dados
-
-    private void deleteTable() {
-        Desk deletedDesk = repository.findFirstByFilledIsFalse();
-        repository.delete(deletedDesk);
-    } //Remove apenas um objeto onde o atributo e falso
-
-    public void createTable(){
-        Desk mesa = new Desk(false);
-        repository.save(mesa);
-    } //instancia uma nova mesa e adiciona ela na lista e no banco de dados
-
-    public Desk searchTableById(int id){
-        Optional<Desk> desk = repository.findById(id);
-        return desk.orElse(null);
-    } //retorna uma mesa pelo Id
 }
