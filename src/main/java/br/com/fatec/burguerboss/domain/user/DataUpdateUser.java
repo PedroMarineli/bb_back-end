@@ -4,13 +4,15 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
-public record DataCreateUser(
+public record DataUpdateUser(
+        @NotNull
+        Integer id,
         @NotBlank
         String username,
         @NotNull
         String password
 ) {
-        public DataCreateUser {
-                password =  BCrypt.hashpw(password, BCrypt.gensalt());
-        }
+    public DataUpdateUser {
+        password =  BCrypt.hashpw(password, BCrypt.gensalt());
+    }
 }

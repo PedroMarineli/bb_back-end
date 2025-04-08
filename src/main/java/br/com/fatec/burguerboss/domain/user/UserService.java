@@ -20,4 +20,16 @@ public class UserService {
         User user = new User(dataCreateUser);
         repository.save(user);
     }
+
+    public void updateUser(@Valid DataUpdateUser dataUpdateUser) {
+        User user = repository.findById(dataUpdateUser.id()).orElse(null);
+        assert user != null;
+        user.setUsername(dataUpdateUser.username());
+        user.setPassword(dataUpdateUser.password());
+        repository.save(user);
+    }
+
+    public void deleteUser(Integer id) {
+        repository.deleteById(id);
+    }
 }
