@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
-    public void erroGlobal(){
-        System.out.println("teste");
+    public ResponseEntity<String> erroGlobal(Exception e){
+        return ResponseEntity.badRequest().body(e.getMessage());
     }
 
 }
