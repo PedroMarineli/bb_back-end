@@ -24,4 +24,12 @@ public class Menu {
     public List<MenuItem> getItens() {return itens;}
 
     public void setItens(List<MenuItem> itens) {this.itens = itens;}
+
+    @Override
+    public String toString() {
+        return "Menu{" +
+                "id=" + id +
+                ", itens=" + itens +
+                '}';
+    }
 }

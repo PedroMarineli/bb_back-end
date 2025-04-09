@@ -25,10 +25,7 @@ public class Order {
     private Desk desk;
 
     public Order(DataCreateOrder data) {
-        this.totalValue = data.totalValue();
-        this.paymentMethod = data.paymentMethod();
         this.orderItems = data.orderItems();
-        this.orderStatus = data.orderStatus();
         this.desk = data.desk();
     }
 
@@ -82,5 +79,17 @@ public class Order {
 
     public void setDesk(Desk desk) {
         this.desk = desk;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", totalValue=" + totalValue +
+                ", paymentMethod=" + paymentMethod +
+                ", orderItems=" + orderItems +
+                ", orderStatus=" + orderStatus +
+                ", desk=" + desk +
+                '}';
     }
 }

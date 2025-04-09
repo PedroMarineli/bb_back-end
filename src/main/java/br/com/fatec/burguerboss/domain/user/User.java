@@ -3,6 +3,7 @@ package br.com.fatec.burguerboss.domain.user;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import java.util.Collection;
 import java.util.List;
@@ -22,6 +23,11 @@ public class User implements UserDetails {
     public User(DataCreateUser data) {
         this.username = data.username();
         this.password = data.password();
+    }
+
+    public User(String NewUsername, String NewPassword) {
+        this.username = NewUsername;
+        this.password = BCrypt.hashpw(NewPassword, BCrypt.gensalt());
     }
 
 

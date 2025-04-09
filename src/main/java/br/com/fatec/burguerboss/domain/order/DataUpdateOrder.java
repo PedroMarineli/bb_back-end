@@ -7,7 +7,6 @@ import java.math.BigDecimal;
 
 public record DataUpdateOrder(
         Integer id,
-        BigDecimal totalValue,
         PaymentMethod paymentMethod,
         OrderStatus orderStatus,
         Desk desk
