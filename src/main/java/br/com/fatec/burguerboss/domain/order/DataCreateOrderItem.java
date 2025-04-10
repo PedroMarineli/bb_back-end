@@ -7,4 +7,18 @@ public record DataCreateOrderItem(
         MenuItem menuItem,
         Order order
 ) {
+    @Override
+    public Order order() {
+        return order;
+    }
+
+    @Override
+    public MenuItem menuItem() {
+        return menuItem;
+    }
+
+    @Override
+    public Integer quantity() {
+        return quantity;
+    }
 }
