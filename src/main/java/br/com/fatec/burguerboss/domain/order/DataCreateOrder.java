@@ -7,7 +7,6 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public record DataCreateOrder(
-         PaymentMethod paymentMethod,
          List<OrderItem> orderItems,
          Desk desk
 ) {
