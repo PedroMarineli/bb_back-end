@@ -5,12 +5,13 @@ import br.com.fatec.burguerboss.domain.desk.DeskRepository;
 import br.com.fatec.burguerboss.domain.menu.MenuItem;
 import br.com.fatec.burguerboss.domain.menu.MenuItemRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,6 +28,8 @@ public class OrderService {
     @Autowired
     private MenuItemRepository menuItemRepository;
 
+    private static final Logger logger = LoggerFactory.getLogger(OrderService.class);
+
     public List<DataListOrder> listOrders() {
         return orderRepository.findAll().stream().map(DataListOrder::new).collect(Collectors.toList());
     }
@@ -34,16 +37,20 @@ public class OrderService {
     public void createOrder(DataCreateOrder data) {
         Order order = new Order(data);
 
+        logger.info("Criando novo pedido de id:{}", order.getId());
+
         Desk desk = deskRepository.findById(data.desk().getId()).orElse(null);
         assert desk != null;
         desk.setFilled(true);
         deskRepository.save(desk);
 
         orderRepository.save(order);
+
+        logger.info("Salvo o pedido de id:{}", order.getId());
     }
 
     public void createOrderItem(DataCreateOrderItem data) {
-        System.out.println("Criando novo item de pedido");
+        logger.info("Criando novo item para o pedido de id:{}", data.order().getId());
 
         // Carrega as entidades completas do banco de dados
         Order order = orderRepository.findById(data.order().getId())
@@ -59,13 +66,13 @@ public class OrderService {
         orderItem.setOrder(order);
 
         orderItemRepository.save(orderItem);
-        System.out.println("Item do pedido salvo");
+        logger.info("Item de id:{} do pedido de id:{} salvo", order.getId(), orderItem.getId());
 
         updateOrderTotalValue(order.getId());
     }
 
     private void updateOrderTotalValue(Integer orderId) {
-        System.out.println("Atualizando valor total do pedido");
+        logger.info("Atualizando valor total do pedido de id:{}", orderId);
 
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new EntityNotFoundException("Pedido não encontrado"));
@@ -80,7 +87,7 @@ public class OrderService {
 
         order.setTotalValue(totalValue);
         orderRepository.save(order);
-        System.out.println("Valor total do pedido atualizado");
+        logger.info("Valor total do pedido de id:{} atualizado", orderId);
     }
 
     public void updateOrder(DataUpdateOrder data) {

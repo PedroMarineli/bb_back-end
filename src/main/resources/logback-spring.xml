@@ -1,0 +1,31 @@
+<configuration>
+    <!-- Appender para ARQUIVO (filtrado apenas para seus logs) -->
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>logs/pedidos.log</file>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} | %-5level | %logger{36} | %msg%n</pattern>
+        </encoder>
+        <!-- Filtra para gravar apenas logs do seu pacote -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+    </appender>
+
+    <!-- Appender para CONSOLE (normal, sem filtros) -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss} | %-5level | %msg%n</pattern>
+        </encoder>
+        <!-- SEM FILTROS (mostra tudo no console) -->
+    </appender>
+
+    <!-- Define que SEUS logs vão para o arquivo -->
+    <logger name="br.com.fatec.burguerboss.domain.order.OrderService" level="INFO" additivity="false">
+        <appender-ref ref="FILE" />
+    </logger>
+
+    <!-- Configuração padrão do root (console normal) -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+    </root>
+</configuration>
