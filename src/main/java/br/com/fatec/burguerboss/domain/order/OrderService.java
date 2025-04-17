@@ -35,59 +35,74 @@ public class OrderService {
     }
 
     public void createOrder(DataCreateOrder data) {
-        Order order = new Order(data);
+        try {
+            Order order = new Order(data);
 
-        logger.info("Criando novo pedido de id:{}", order.getId());
+            logger.info("Criando novo pedido de id:{}", order.getId());
 
-        Desk desk = deskRepository.findById(data.desk().getId()).orElse(null);
-        assert desk != null;
-        desk.setFilled(true);
-        deskRepository.save(desk);
+            Desk desk = deskRepository.findById(data.desk().getId()).orElse(null);
+            assert desk != null;
+            desk.setFilled(true);
+            deskRepository.save(desk);
 
-        orderRepository.save(order);
+            orderRepository.save(order);
 
-        logger.info("Salvo o pedido de id:{}", order.getId());
+            logger.info("Salvo o pedido de id:{}", order.getId());
+        } catch (Exception e) {
+            logger.error("Erro ao criar pedido: {}", e.getMessage());
+            throw new RuntimeException("Erro ao criar pedido.", e);
+        }
     }
 
     public void createOrderItem(DataCreateOrderItem data) {
-        logger.info("Criando novo item para o pedido de id:{}", data.order().getId());
+        try {
+            logger.info("Criando novo item para o pedido de id:{}", data.order().getId());
 
-        // Carrega as entidades completas do banco de dados
-        Order order = orderRepository.findById(data.order().getId())
-                .orElseThrow(() -> new EntityNotFoundException("Pedido não encontrado"));
+            // Carrega as entidades completas do banco de dados
+            Order order = orderRepository.findById(data.order().getId())
+                    .orElseThrow(() -> new EntityNotFoundException("Pedido não encontrado"));
 
-        MenuItem menuItem = menuItemRepository.findById(data.menuItem().getId())
-                .orElseThrow(() -> new EntityNotFoundException("Item do menu não encontrado"));
+            MenuItem menuItem = menuItemRepository.findById(data.menuItem().getId())
+                    .orElseThrow(() -> new EntityNotFoundException("Item do menu não encontrado"));
 
-        // Cria o OrderItem com as entidades carregadas
-        OrderItem orderItem = new OrderItem();
-        orderItem.setQuantity(data.quantity());
-        orderItem.setMenuItem(menuItem);
-        orderItem.setOrder(order);
+            // Cria o OrderItem com as entidades carregadas
+            OrderItem orderItem = new OrderItem();
+            orderItem.setQuantity(data.quantity());
+            orderItem.setMenuItem(menuItem);
+            orderItem.setOrder(order);
 
-        orderItemRepository.save(orderItem);
-        logger.info("Item de id:{} do pedido de id:{} salvo", order.getId(), orderItem.getId());
+            orderItemRepository.save(orderItem);
+            logger.info("Item de id:{} do pedido de id:{} salvo", order.getId(), orderItem.getId());
 
-        updateOrderTotalValue(order.getId());
+            updateOrderTotalValue(order.getId());
+        } catch (Exception e) {
+            logger.error("Erro ao criar item do pedido: {}", e.getMessage());
+            throw new RuntimeException("Erro ao criar item do pedido.", e);
+        }
     }
 
     private void updateOrderTotalValue(Integer orderId) {
-        logger.info("Atualizando valor total do pedido de id:{}", orderId);
+        try {
+            logger.info("Atualizando valor total do pedido de id:{}", orderId);
 
-        Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new EntityNotFoundException("Pedido não encontrado"));
+            Order order = orderRepository.findById(orderId)
+                    .orElseThrow(() -> new EntityNotFoundException("Pedido não encontrado"));
 
-        // Busca todos os itens do pedido (caso não estejam carregados)
-        List<OrderItem> items = orderItemRepository.findByOrderId(orderId);
+            // Busca todos os itens do pedido (caso não estejam carregados)
+            List<OrderItem> items = orderItemRepository.findByOrderId(orderId);
 
-        BigDecimal totalValue = items.stream()
-                .filter(item -> item.getMenuItem() != null && item.getMenuItem().getPrice() != null)
-                .map(item -> item.getMenuItem().getPrice().multiply(BigDecimal.valueOf(item.getQuantity())))
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+            BigDecimal totalValue = items.stream()
+                    .filter(item -> item.getMenuItem() != null && item.getMenuItem().getPrice() != null)
+                    .map(item -> item.getMenuItem().getPrice().multiply(BigDecimal.valueOf(item.getQuantity())))
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        order.setTotalValue(totalValue);
-        orderRepository.save(order);
-        logger.info("Valor total do pedido de id:{} atualizado", orderId);
+            order.setTotalValue(totalValue);
+            orderRepository.save(order);
+            logger.info("Valor total do pedido de id:{} atualizado", orderId);
+        } catch (Exception e) {
+            logger.error("Erro ao atualizar valor total do pedido: {}", e.getMessage());
+            throw new RuntimeException("Erro ao atualizar valor total do pedido.", e);
+        }
     }
 
     public void updateOrder(DataUpdateOrder data) {

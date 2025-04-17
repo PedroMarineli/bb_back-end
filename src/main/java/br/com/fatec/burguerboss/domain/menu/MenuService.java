@@ -2,6 +2,8 @@ package br.com.fatec.burguerboss.domain.menu;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,9 +15,17 @@ public class MenuService {
     @Autowired
     private MenuRepository repositoryMenu;
 
+    private static final Logger logger = LoggerFactory.getLogger(MenuService.class);
+
     //search a menu with the (id) in repositoryMenu and transform then in DataListMenuItems, after that it returns it
     public DataListMenuItems listMenuItems(int id) {
-        return repositoryMenu.findById(id).map(DataListMenuItems::new).orElseThrow();
+        try {
+            logger.info("Listando itens do menu com ID: {}", id);
+            return repositoryMenu.findById(id).map(DataListMenuItems::new).orElseThrow();
+        } catch (Exception e) {
+            logger.error("Erro ao listar itens do menu com ID {}: {}", id, e.getMessage());
+            throw new RuntimeException("Erro ao listar itens do menu.", e);
+        }
     }
 
     //search all the menus in repositoryMenu and transform then in DataListMenu, after that it returns it
@@ -31,8 +41,14 @@ public class MenuService {
 
     //create a new MenuItem entity and save it on the repository(database)
     public void createMenuItem(DataCreateMenuItem data) {
-        MenuItem item = new MenuItem(data);
-        repositoryItem.save(item);
+        try {
+            logger.info("Criando novo item de menu: {}", data.name());
+            MenuItem item = new MenuItem(data);
+            repositoryItem.save(item);
+        } catch (Exception e) {
+            logger.error("Erro ao criar item de menu: {}", e.getMessage());
+            throw new RuntimeException("Erro ao criar item de menu.", e);
+        }
     }
 
     //search a menu item with the (id) in repositoryItem and update the data with the received DTO(DataUpdateMenuItem)
@@ -43,7 +59,6 @@ public class MenuService {
         item.setCategory(data.category());
         item.setName(data.name());
         item.setPrice(data.price());
-        item.setMenu(data.menu());
         repositoryItem.save(item);
     }
 
