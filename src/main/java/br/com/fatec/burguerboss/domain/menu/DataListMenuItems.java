@@ -7,7 +7,6 @@ public record DataListMenuItems(
         Integer id,
         List<DataListMenuItem> items
 ) {
-    //constructor that receive a Menu and create a DataListMenuItem
     public DataListMenuItems(Menu menu) {
         this(
                 menu.getId(),

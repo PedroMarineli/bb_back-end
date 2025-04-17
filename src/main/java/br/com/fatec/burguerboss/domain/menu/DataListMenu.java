@@ -2,9 +2,8 @@ package br.com.fatec.burguerboss.domain.menu;
 
 public record DataListMenu(
         Integer id,
-        Integer MenuLength
+        Integer menuLength
 ) {
-    //a constructor that receives a menu and return a DataListMenu
     public DataListMenu(Menu menu) {
         this(
                 menu.getId(),

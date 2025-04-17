@@ -5,9 +5,10 @@ import jakarta.validation.constraints.NotNull;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 public record DataCreateUser(
-        @NotBlank
+        @NotBlank(message = "O nome de usuário não pode estar em branco.")
         String username,
-        @NotNull
+
+        @NotNull(message = "A senha não pode ser nula.")
         String password
 ) {
         public DataCreateUser {
