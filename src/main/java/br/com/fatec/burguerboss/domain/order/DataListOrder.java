@@ -12,7 +12,8 @@ public record DataListOrder(
         PaymentMethod paymentMethod,
         List<OrderItem> orderItems,
         OrderStatus orderStatus,
-        Desk desk
+        Desk desk,
+        String description
 ) {
     public DataListOrder(Order order){
         this(
@@ -21,7 +22,8 @@ public record DataListOrder(
                 order.getPaymentMethod(),
                 order.getOrderItems(),
                 order.getOrderStatus(),
-                order.getDesk()
+                order.getDesk(),
+                order.getDescription()
         );
     }
 }

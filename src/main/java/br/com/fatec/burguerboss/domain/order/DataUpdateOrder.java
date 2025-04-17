@@ -3,10 +3,15 @@ package br.com.fatec.burguerboss.domain.order;
 import br.com.fatec.burguerboss.domain.desk.Desk;
 import br.com.fatec.burguerboss.domain.payment.PaymentMethod;
 
+import java.math.BigDecimal;
+import java.util.List;
+
 public record DataUpdateOrder(
         Integer id,
+        BigDecimal totalValue,
         PaymentMethod paymentMethod,
+        List<OrderItem> orderItems,
         OrderStatus orderStatus,
-        Desk desk
-) {
-}
+        Desk desk,
+        String description
+) {}

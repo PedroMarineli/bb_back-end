@@ -23,6 +23,7 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "desk_id")
     private Desk desk;
+    private String description;
 
     public Order(DataCreateOrder data) {
         this.orderItems = data.orderItems();
@@ -92,5 +93,13 @@ public class Order {
                 ", orderStatus=" + orderStatus +
                 ", desk=" + desk +
                 '}';
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
