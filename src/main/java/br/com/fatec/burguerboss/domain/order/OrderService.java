@@ -106,20 +106,38 @@ public class OrderService {
     }
 
     public void updateOrder(DataUpdateOrder data) {
-        Order order = orderRepository.findById(data.id()).orElse(null);
-        assert order != null;
+        try {
+            logger.info("Atualizando pedido com ID: {}", data.id());
+            Order order = orderRepository.findById(data.id())
+                    .orElseThrow(() -> new EntityNotFoundException("Pedido não encontrado com o ID: " + data.id()));
         order.setOrderStatus(data.orderStatus());
         order.setDesk(data.desk());
         order.setPaymentMethod(data.paymentMethod());
         orderRepository.save(order);
+            logger.info("Pedido com ID: {} atualizado com sucesso", data.id());
+        } catch (Exception e) {
+            logger.error("Erro ao atualizar pedido com ID {}: {}", data.id(), e.getMessage());
+            throw new RuntimeException("Erro ao atualizar pedido.", e);
+        }
     }
 
     public void updateOrderItem(DataUpdateOrderItem data) {
-        OrderItem item = orderItemRepository.findById(data.id()).orElse(null);
-        assert item != null;
-        item.setQuantity(data.quantity());
-        item.setOrder(data.order());
-        item.setMenuItem(data.menuItem());
+        try {
+            logger.info("Atualizando item de pedido com ID: {}", data.id());
+            OrderItem item = orderItemRepository.findById(data.id())
+                    .orElseThrow(() -> new EntityNotFoundException("Item de pedido não encontrado com o ID: " + data.id()));
+            item.setQuantity(data.quantity());
+            item.setOrder(data.order());
+            item.setMenuItem(data.menuItem());
+            orderItemRepository.save(item);
+
+            // Atualizar o valor total do pedido após modificar um item
+            updateOrderTotalValue(data.order().getId());
+            logger.info("Item de pedido com ID: {} atualizado com sucesso", data.id());
+        } catch (Exception e) {
+            logger.error("Erro ao atualizar item de pedido com ID {}: {}", data.id(), e.getMessage());
+            throw new RuntimeException("Erro ao atualizar item de pedido.", e);
+        }
     }
 
     public void deleteOrder(Integer id) {

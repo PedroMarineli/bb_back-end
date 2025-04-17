@@ -1,14 +1,50 @@
 <configuration>
-    <!-- Appender para ARQUIVO (filtrado apenas para seus logs) -->
-    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-        <file>logs/pedidos.log</file>
+    <!-- Appender para ARQUIVO de pedidos -->
+    <appender name="FILE_ORDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH:-logs}/pedidos.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH:-logs}/pedidos.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
         <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss} | %-5level | %logger{36} | %msg%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} | %-5level | [%thread] | %logger{36} | %msg%n</pattern>
         </encoder>
-        <!-- Filtra para gravar apenas logs do seu pacote -->
-        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>INFO</level>
-        </filter>
+    </appender>
+
+    <!-- Appender para ARQUIVO de usuários -->
+    <appender name="FILE_USER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH:-logs}/usuarios.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH:-logs}/usuarios.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} | %-5level | [%thread] | %logger{36} | %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Appender para ARQUIVO de menu -->
+    <appender name="FILE_MENU" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH:-logs}/menu.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH:-logs}/menu.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} | %-5level | [%thread] | %logger{36} | %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Appender para ARQUIVO de mesas -->
+    <appender name="FILE_DESK" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH:-logs}/mesas.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH:-logs}/mesas.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} | %-5level | [%thread] | %logger{36} | %msg%n</pattern>
+        </encoder>
     </appender>
 
     <!-- Appender para CONSOLE (normal, sem filtros) -->
@@ -19,9 +55,21 @@
         <!-- SEM FILTROS (mostra tudo no console) -->
     </appender>
 
-    <!-- Define que SEUS logs vão para o arquivo -->
+    <!-- Define que SEUS logs vão para seus respectivos arquivos -->
     <logger name="br.com.fatec.burguerboss.domain.order.OrderService" level="INFO" additivity="false">
-        <appender-ref ref="FILE" />
+        <appender-ref ref="FILE_ORDER" />
+    </logger>
+
+    <logger name="br.com.fatec.burguerboss.domain.user.UserService" level="INFO" additivity="false">
+        <appender-ref ref="FILE_USER" />
+    </logger>
+
+    <logger name="br.com.fatec.burguerboss.domain.menu.MenuItemService" level="INFO" additivity="false">
+        <appender-ref ref="FILE_MENU" />
+    </logger>
+
+    <logger name="br.com.fatec.burguerboss.domain.desk.DeskService" level="INFO" additivity="false">
+        <appender-ref ref="FILE_DESK" />
     </logger>
 
     <!-- Configuração padrão do root (console normal) -->
