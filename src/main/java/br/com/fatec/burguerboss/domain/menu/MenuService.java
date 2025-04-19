@@ -1,6 +1,8 @@
 package br.com.fatec.burguerboss.domain.menu;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,10 +20,14 @@ public class MenuService {
     private static final Logger logger = LoggerFactory.getLogger(MenuService.class);
 
     //search a menu with the (id) in repositoryMenu and transform then in DataListMenuItems, after that it returns it
-    public DataListMenuItems listMenuItems(int id) {
+    public Page<MenuItem> listMenuItems(int id, Pageable pagination) {
         try {
-            logger.info("Listando itens do menu com ID: {}", id);
-            return repositoryMenu.findById(id).map(DataListMenuItems::new).orElseThrow();
+            logger.info("Listando itens do menu com ID: {} (paginado)", id);
+            Menu menu = repositoryMenu.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Menu não encontrado com ID: " + id));
+
+            // Retorna os itens do menu com paginação
+            return repositoryItem.findByMenuId(id, pagination);
         } catch (Exception e) {
             logger.error("Erro ao listar itens do menu com ID {}: {}", id, e.getMessage());
             throw new RuntimeException("Erro ao listar itens do menu.", e);
@@ -29,8 +35,8 @@ public class MenuService {
     }
 
     //search all the menus in repositoryMenu and transform then in DataListMenu, after that it returns it
-    public List<DataListMenu> listMenu() {
-        return repositoryMenu.findAll().stream().map(DataListMenu::new).collect(Collectors.toList());
+    public Page<DataListMenu> listMenu(Pageable pagination) {
+        return repositoryMenu.findAll(pagination).map(DataListMenu::new);
     }
 
     //create a new entity Menu and save it on the repository(database)

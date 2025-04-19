@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.logging.Logger;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 @RestController
 @RequestMapping("/order")
@@ -19,8 +21,8 @@ public class OrderController {
     private OrderService orderService;
 
     @GetMapping
-    public ResponseEntity<List<DataListOrder>> listOrders(){
-        return ResponseEntity.ok().body(orderService.listOrders());
+    public ResponseEntity<Page<DataListOrder>> listOrders(Pageable pagination){
+        return ResponseEntity.ok().body(orderService.listOrders(pagination));
     }
 
     @PostMapping

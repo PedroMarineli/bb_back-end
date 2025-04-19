@@ -27,7 +27,7 @@ public class AuthController {
     private TokenService tokenService;
 
     @PostMapping
-    public ResponseEntity login(@RequestBody @Valid UserData userdata) {
+    public ResponseEntity<DadosTokenJWT> login(@RequestBody @Valid UserData userdata) {
         Authentication authentication;
         var authenticationToken = new UsernamePasswordAuthenticationToken(userdata.username(), userdata.password());
 

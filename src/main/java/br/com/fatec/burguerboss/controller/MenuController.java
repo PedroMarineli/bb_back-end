@@ -5,6 +5,8 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,14 +21,14 @@ public class MenuController {
 
     //call a menuService method to list all the menus(DataListMenu)
     @GetMapping
-    public ResponseEntity<List<DataListMenu>> listMenu(){
-        return ResponseEntity.ok().body(menuService.listMenu());
+    public ResponseEntity<Page<DataListMenu>> listMenu(Pageable pagination){
+        return ResponseEntity.ok().body(menuService.listMenu(pagination));
     }
 
     //call a menuService method to list menu items by id(menu)
     @GetMapping("/{id}")
-    public ResponseEntity<DataListMenuItems> listMenuItems(@PathVariable @NotNull Integer id){
-        return ResponseEntity.ok().body(menuService.listMenuItems(id));
+    public ResponseEntity<Page<MenuItem>> listMenuItems(@PathVariable @NotNull Integer id, Pageable pagination){
+        return ResponseEntity.ok().body(menuService.listMenuItems(id, pagination));
     }
 
     //call a menuService method to create a new menu
