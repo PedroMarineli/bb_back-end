@@ -28,11 +28,23 @@ public class SecurityConfig{
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(req -> {
-                    req.requestMatchers("/login").permitAll();
-                    req.requestMatchers(HttpMethod.GET, "/menu/**").permitAll();
-                    req.anyRequest().authenticated();
-                })
+                .authorizeHttpRequests(authorize -> authorize
+                        // Permite acesso público ao login
+                        .requestMatchers(HttpMethod.POST, "/login").permitAll()
+
+                        // Menu - Restrições para administradores
+                        .requestMatchers(HttpMethod.POST, "/menu/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/menu/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/menu/**").hasRole("ADMIN")
+
+                        // User - Restrições para administradores
+                        .requestMatchers(HttpMethod.POST, "/user").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/user").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/user").hasRole("ADMIN")
+
+                        // Outros endpoints exigem autenticação
+                        .anyRequest().authenticated()
+                )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }

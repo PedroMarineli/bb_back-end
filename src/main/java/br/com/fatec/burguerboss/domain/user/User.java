@@ -2,6 +2,7 @@ package br.com.fatec.burguerboss.domain.user;
 
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
@@ -17,22 +18,22 @@ public class User implements UserDetails {
     private String username;
     private String password;
 
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
+
     public User() {
     }
 
     public User(DataCreateUser data) {
         this.username = data.username();
         this.password = data.password();
+        this.role = data.role();
     }
 
-    public User(String NewUsername, String NewPassword) {
+    public User(String NewUsername, String NewPassword, UserRole NewRole) {
         this.username = NewUsername;
         this.password = BCrypt.hashpw(NewPassword, BCrypt.gensalt());
-    }
-
-
-    public String getUsername() {
-        return username;
+        this.role = NewRole;
     }
 
     @Override
@@ -55,23 +56,14 @@ public class User implements UserDetails {
         return UserDetails.super.isEnabled();
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        if (this.role == UserRole.ADMIN) {
+            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+        } else {
+            return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        }
     }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
 
     public Integer getId() {
         return id;
@@ -82,11 +74,38 @@ public class User implements UserDetails {
     }
 
     @Override
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
+
+    @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", role=" + role +
                 '}';
     }
 }

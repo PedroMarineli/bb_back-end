@@ -9,7 +9,10 @@ public record DataCreateUser(
         String username,
 
         @NotNull(message = "A senha não pode ser nula.")
-        String password
+        String password,
+
+        @NotNull(message = "O cargo não pode estar em branco.")
+        UserRole role
 ) {
         public DataCreateUser {
                 password =  BCrypt.hashpw(password, BCrypt.gensalt());
