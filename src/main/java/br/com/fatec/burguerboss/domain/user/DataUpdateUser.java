@@ -10,7 +10,9 @@ public record DataUpdateUser(
         @NotBlank
         String username,
         @NotNull
-        String password
+        String password,
+        @NotNull
+        UserRole role
 ) {
     public DataUpdateUser {
         password =  BCrypt.hashpw(password, BCrypt.gensalt());
