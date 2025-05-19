@@ -23,6 +23,9 @@ public record DataUpdateMenuItem(
         @Size(min = 1, max = 50, message = "A categoria do item deve ter entre 1 e 50 caracteres.")
         String category,
 
+        @Size(max = 255, message = "A descrição do item deve ter no máximo 255 caracteres.")
+        String description,
+
         boolean available
 ) {
 }

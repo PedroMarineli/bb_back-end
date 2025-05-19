@@ -21,6 +21,9 @@ public record DataCreateMenuItem(
 
         boolean available,
 
+        @Size(max = 255, message = "A descrição do item deve ter no máximo 255 caracteres.")
+        String description,
+
         @NotNull(message = "O menu associado não pode ser nulo.")
         Menu menu
 ) {

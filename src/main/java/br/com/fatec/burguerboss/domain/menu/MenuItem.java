@@ -20,6 +20,9 @@ public class MenuItem {
     @JoinColumn(name = "menu_id")
     private Menu menu;
 
+    @Column(length = 255)
+    private String description;
+
     public MenuItem() {
     }
 
@@ -29,6 +32,15 @@ public class MenuItem {
         this.category = data.category();
         this.available = data.available();
         this.menu = data.menu();
+        this.description = data.description();
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public int getId() {

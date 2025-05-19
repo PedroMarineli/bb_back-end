@@ -65,6 +65,7 @@ public class MenuService {
         item.setCategory(data.category());
         item.setName(data.name());
         item.setPrice(data.price());
+        item.setDescription(data.description());
         repositoryItem.save(item);
     }
 
