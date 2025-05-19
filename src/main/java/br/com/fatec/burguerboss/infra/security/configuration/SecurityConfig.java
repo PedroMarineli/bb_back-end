@@ -42,6 +42,17 @@ public class SecurityConfig{
                         .requestMatchers(HttpMethod.PUT, "/user").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/user").hasRole("ADMIN")
 
+                        .requestMatchers(HttpMethod.GET, "/menu/**").permitAll()
+
+                        //swagger
+                        .requestMatchers(
+                                "/swagger-ui.html",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/swagger-resources/**",
+                                "/webjars/**"
+                        ).permitAll()
+
                         // Outros endpoints exigem autenticação
                         .anyRequest().authenticated()
                 )

@@ -38,6 +38,7 @@ public class UserService {
                     .orElseThrow(() -> new RuntimeException("Usuário não encontrado com o ID: " + dataUpdateUser.id()));
             user.setUsername(dataUpdateUser.username());
             user.setPassword(dataUpdateUser.password());
+            user.setRole(dataUpdateUser.role());
             repository.save(user);
         } catch (Exception e) {
             logger.error("Erro ao atualizar usuário: {}", e.getMessage());
