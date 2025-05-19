@@ -64,4 +64,11 @@ public class OrderController {
         orderService.deleteOrderItem(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping("/{id}/finish")
+    @Transactional
+    public ResponseEntity<Void> finishOrder(@PathVariable Integer id) {
+        orderService.finishOrder(id);
+        return ResponseEntity.noContent().build();
+    }
 }

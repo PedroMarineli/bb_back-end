@@ -1,5 +1,7 @@
 package br.com.fatec.burguerboss.domain.order;
 
+import br.com.fatec.burguerboss.domain.completedorder.CompletedOrder;
+import br.com.fatec.burguerboss.domain.completedorder.CompletedOrderRepository;
 import br.com.fatec.burguerboss.domain.desk.Desk;
 import br.com.fatec.burguerboss.domain.desk.DeskRepository;
 import br.com.fatec.burguerboss.domain.menu.MenuItem;
@@ -29,6 +31,9 @@ public class OrderService {
 
     @Autowired
     private MenuItemRepository menuItemRepository;
+    
+    @Autowired
+    private CompletedOrderRepository completedOrderRepository;
 
     private static final Logger logger = LoggerFactory.getLogger(OrderService.class);
 
@@ -152,5 +157,38 @@ public class OrderService {
 
     public void deleteOrderItem(Integer id) {
         orderItemRepository.deleteById(id);
+    }
+
+    public void finishOrder(Integer orderId) {
+        try {
+            logger.info("Finalizando pedido com ID: {}", orderId);
+            
+            Order order = orderRepository.findById(orderId)
+                    .orElseThrow(() -> new EntityNotFoundException("Pedido não encontrado com o ID: " + orderId));
+            
+            // Verifica se o pedido já está finalizado
+            if (order.getOrderStatus() == OrderStatus.FINISHED) {
+                logger.warn("Pedido com ID: {} já está finalizado", orderId);
+                return;
+            }
+            
+            // Altera o status do pedido para FINISHED
+            order.setOrderStatus(OrderStatus.FINISHED);
+            orderRepository.save(order);
+            
+            // Libera a mesa
+            Desk desk = order.getDesk();
+            desk.setFilled(false);
+            deskRepository.save(desk);
+            
+            // Salva na tabela de pedidos concluídos com os itens
+            CompletedOrder completedOrder = new CompletedOrder(order);
+            completedOrderRepository.save(completedOrder);
+            
+            logger.info("Pedido com ID: {} finalizado com sucesso", orderId);
+        } catch (Exception e) {
+            logger.error("Erro ao finalizar pedido com ID {}: {}", orderId, e.getMessage());
+            throw new RuntimeException("Erro ao finalizar pedido.", e);
+        }
     }
 }
