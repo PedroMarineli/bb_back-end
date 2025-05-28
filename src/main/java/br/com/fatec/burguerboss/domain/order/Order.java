@@ -29,6 +29,7 @@ public class Order {
         this.orderItems = data.orderItems();
         this.desk = data.desk();
         this.orderStatus = OrderStatus.CREATED;
+        this.description = data.description();
     }
 
     public Order() {

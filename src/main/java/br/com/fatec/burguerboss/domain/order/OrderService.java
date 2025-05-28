@@ -124,6 +124,7 @@ public class OrderService {
         order.setOrderStatus(data.orderStatus());
         order.setDesk(data.desk());
         order.setPaymentMethod(data.paymentMethod());
+        order.setDescription(data.description());
         orderRepository.save(order);
             logger.info("Pedido com ID: {} atualizado com sucesso", data.id());
         } catch (Exception e) {
