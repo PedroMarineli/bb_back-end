@@ -1,5 +1,8 @@
 package br.com.fatec.burguerboss;
 
+import br.com.fatec.burguerboss.domain.menu.Menu;
+import br.com.fatec.burguerboss.domain.menu.MenuRepository;
+import br.com.fatec.burguerboss.domain.order.OrderRepository;
 import br.com.fatec.burguerboss.domain.user.User;
 import br.com.fatec.burguerboss.domain.user.UserRepository;
 import br.com.fatec.burguerboss.domain.user.UserRole;
@@ -16,11 +19,15 @@ public class BurguerbossApplication {
 	}
 
 	@Bean
-	public CommandLineRunner initializeData(UserRepository repository) {
+	public CommandLineRunner initializeData(UserRepository repository, MenuRepository menuRepository) {
 		return args -> {
 			if (repository.count() == 0) {
 				User user = new User("admin", "root", UserRole.ADMIN);
 				repository.save(user);
+			}
+			if (menuRepository.count() == 0) {
+				Menu menu = new Menu();
+				menuRepository.save(menu);
 			}
 		};
 	}

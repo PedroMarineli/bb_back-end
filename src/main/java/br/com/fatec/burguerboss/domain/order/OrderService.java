@@ -167,12 +167,6 @@ public class OrderService {
             Order order = orderRepository.findById(orderId)
                     .orElseThrow(() -> new EntityNotFoundException("Pedido não encontrado com o ID: " + orderId));
             
-            // Verifica se o pedido já está finalizado
-            if (order.getOrderStatus() == OrderStatus.FINISHED) {
-                logger.warn("Pedido com ID: {} já está finalizado", orderId);
-                return;
-            }
-            
             // Altera o status do pedido para FINISHED
             order.setOrderStatus(OrderStatus.FINISHED);
             orderRepository.save(order);
